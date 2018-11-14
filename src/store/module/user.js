@@ -11,6 +11,7 @@ import {
 import { setToken, getToken } from '@/libs/util'
 
 export default {
+  // Vuex维护的所有状态
   state: {
     userName: '',
     userId: '',
@@ -23,6 +24,7 @@ export default {
     messageTrashList: [],
     messageContentStore: {}
   },
+  // 所有的mutation必须是同步函数 代表对state里面的状态的变更 其变化可以通知Vue进行状态更新和页面更新
   mutations: {
     setAvator (state, avatorPath) {
       state.avatorImgPath = avatorPath
@@ -67,6 +69,7 @@ export default {
     messageReadedCount: state => state.messageReadedList.length,
     messageTrashCount: state => state.messageTrashList.length
   },
+  // 出发mutation的函数，第一个参数 {commit} 表示 commit('mutationMethod', {params}) 可以有异步操作
   actions: {
     // 登录
     handleLogin ({ commit }, {userName, password}) {

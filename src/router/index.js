@@ -9,8 +9,9 @@ const { homeName } = config
 
 Vue.use(Router)
 const router = new Router({
-  routes,
-  mode: 'history'
+  routes
+  // 后端支持后开启history模式
+  // mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'
 

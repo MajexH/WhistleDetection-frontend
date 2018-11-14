@@ -36,6 +36,7 @@ request.interceptors.response.use((response) => {
   return { data, status }
 }, (err) => {
   addErrorLog(err)
+  // TODO:提示错误
   return Promise.reject(err)
 })
 
