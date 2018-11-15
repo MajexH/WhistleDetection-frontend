@@ -72,7 +72,7 @@ export default {
   // 出发mutation的函数，第一个参数 {commit} 表示 commit('mutationMethod', {params}) 可以有异步操作
   actions: {
     // 登录
-    handleLogin ({ commit }, {userName, password}) {
+    handleLogin ({ commit }, { userName, password }) {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
         login({
