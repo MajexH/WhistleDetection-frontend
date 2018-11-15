@@ -1,8 +1,14 @@
 <template>
-  <router-view/>
+
 </template>
+
 <script>
 export default {
-  name: 'ParentView'
+  props: {
+  }
 }
 </script>
+
+<style>
+
+</style>

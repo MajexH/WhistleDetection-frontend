@@ -1,5 +1,4 @@
 import Main from '@/components/main'
-import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -174,25 +173,6 @@ export default [
     ]
   },
   {
-    path: '/i18n',
-    name: 'i18n',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'i18n_page',
-        name: 'i18n_page',
-        meta: {
-          icon: 'md-planet',
-          title: 'i18n - {{ i18n_page }}'
-        },
-        component: () => import('@/view/i18n/i18n-page.vue')
-      }
-    ]
-  },
-  {
     path: '/error_store',
     name: 'error_store',
     meta: {
@@ -251,8 +231,30 @@ export default [
     ]
   },
   {
-    path: '/multilevel',
-    name: 'multilevel',
+    path: '/user',
+    name: 'userManageMain',
+    redirect: '/user/manage',
+    meta: {
+      hideInBread: true,
+      notCache: true,
+      title: '用户管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'manage',
+        name: 'userManage',
+        meta: {
+          // TODO:access 定义能访问的角色
+          title: '用户管理',
+          icon: 'md-planet'
+        },
+        component: () => import('@/view/user/user-manage.vue')
+      }
+    ]
+  },
+  {
+    path: '/service',
     meta: {
       icon: 'md-menu',
       title: '业务办理'
@@ -260,44 +262,23 @@ export default [
     component: Main,
     children: [
       {
-        path: 'level_2_1',
-        name: 'level_2_1',
+        path: '',
+        name: 'service',
         meta: {
           icon: 'md-funnel',
-          title: '二级-1'
+          title: '业务查看'
         },
-        component: () => import('@/view/multilevel/level-2-1.vue')
+        component: () => import('@/view/service/service.vue')
       },
       {
-        path: 'level_2_2',
-        name: 'level_2_2',
+        path: 'serviceCheck',
+        name: 'serviceCheck',
         meta: {
-          access: ['super_admin'],
+          // TODO:access: ['super_admin'],
           icon: 'md-funnel',
-          showAlways: true,
-          title: '二级-2'
+          title: '业务复核'
         },
-        component: parentView,
-        children: [
-          {
-            path: 'level_2_2_1',
-            name: 'level_2_2_1',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-3-1.vue')
-          }
-        ]
-      },
-      {
-        path: 'level_2_3',
-        name: 'level_2_3',
-        meta: {
-          icon: 'md-funnel',
-          title: '二级-3'
-        },
-        component: () => import('@/view/multilevel/level-2-3.vue')
+        component: () => import('@/view/service/service-review.vue')
       }
     ]
   },
