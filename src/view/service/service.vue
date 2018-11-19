@@ -1,8 +1,7 @@
 <template>
   <div>
-    <service-table :source="test">
+    <service-table>
     </service-table>
-    test2333333
   </div>
 </template>
 
