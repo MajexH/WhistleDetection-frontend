@@ -1,5 +1,5 @@
 <template>
-  <Drawer v-model="show">
+  <Drawer v-model="showDrawer" @on-close="handleClose">
     <p>Some contents...</p>
     <p>Some contents...</p>
     <p>Some contents...</p>
@@ -7,15 +7,25 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
-  props: {
-    show: {
-      default: false
+  computed: {
+    showDrawer: {
+      set () {
+        console.log('set')
+      },
+      get () {
+        return this.$store.state.tables.showDrawer
+      }
     }
   },
   methods: {
+    ...mapMutations({
+      change: 'setShowDrawer'
+    }),
     handleClose () {
-      this.$emit('close', { show: false })
+      this.change(false)
     }
   }
 }
