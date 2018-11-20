@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test">
     <login-item
       @on-handle-register="handleRegister"
       v-if="switchItem === 'login'">
@@ -12,25 +12,38 @@
 
 <script>
 import { loginItem, registerItem } from '_c/login-register'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
     loginItem,
     registerItem
   },
+  computed: {
+    ...mapState({
+      switchItem: state => state.login.switchItem
+    })
+  },
   methods: {
+    ...mapMutations({
+      setSwitchItem: 'setSwitchItem'
+    }),
     handleRegister () {
-      this.switchItem = 'register'
+      this.setSwitchItem('register')
     }
   },
   data () {
     return {
-      switchItem: 'login'
     }
+  },
+  beforeDestroy () {
+    this.setSwitchItem('login')
   }
 }
 </script>
 
 <style>
-
+  .test {
+    display: flex
+  }
 </style>

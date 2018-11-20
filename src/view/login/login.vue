@@ -1,5 +1,5 @@
 <style lang="less">
-  @import './login.less';
+@import './login.less';
 </style>
 
 <template>
@@ -23,10 +23,7 @@ export default {
     LoginForm
   },
   methods: {
-    ...mapActions([
-      'handleLogin',
-      'getUserInfo'
-    ]),
+    ...mapActions(['handleLogin', 'getUserInfo']),
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
@@ -41,5 +38,4 @@ export default {
 </script>
 
 <style>
-
 </style>
