@@ -7,6 +7,7 @@ import store from './store'
 import iView from 'iview'
 import i18n from '@/locale'
 import config from '@/config'
+import VuePreview from 'vue-preview'
 import importDirective from '@/directive'
 import installPlugin from '@/plugin'
 import './index.less'
@@ -17,6 +18,17 @@ if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
+})
+// 添加vuePreview
+Vue.use(VuePreview, {
+  mainClass: 'pswp--minimal--dark',
+  barsSize: {top: 0, bottom: 0},
+  captionEl: false,
+  fullscreenEl: false,
+  shareEl: false,
+  bgOpacity: 0.85,
+  tapToClose: true,
+  tapToToggleControls: false
 })
 /**
  * @description 注册admin内置插件

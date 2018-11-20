@@ -5,9 +5,7 @@ export default {
     // 所有的违章信息数组
     origin: [],
     correct: [],
-    wrong: [],
-    // 是否显示抽屉
-    showDrawer: false
+    wrong: []
   },
   mutations: {
     setOrigin (state, origin) {
@@ -18,9 +16,6 @@ export default {
     },
     setWrong (state, wrong) {
       state.wrong = wrong
-    },
-    setShowDrawer (state, status) {
-      state.showDrawer = status
     }
   },
   // 通过actions去调用api 重新获取信息

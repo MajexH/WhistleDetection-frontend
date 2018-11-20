@@ -5,13 +5,15 @@
       :columns="columnList"
       :data="testData">
     </Table>
-    <service-drawer></service-drawer>
+    <service-drawer
+      :showDrawer="showDrawer"
+      @drawer-close="changeDrawerAction">
+    </service-drawer>
   </div>
 </template>
 
 <script>
 import serviceDrawer from '@/components/drawer/drawer.vue'
-import { mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -24,18 +26,15 @@ export default {
     serviceDrawer
   },
   methods: {
-    ...mapMutations({
-      change: 'setShowDrawer'
-    }),
-    handleChangeDrawerAction () {
-      console.log()
-      this.change(true)
+    changeDrawerAction () {
+      this.showDrawer = !this.showDrawer
     }
   },
   data () {
     return {
       // 设置Table的loading状态
       loading: false,
+      showDrawer: false,
       columnList: [
         {
           title: '车牌号',
@@ -55,17 +54,15 @@ export default {
         },
         {
           title: '审核',
-          render: (h, params, vm) => {
-            return h('Button', {
-              class: {
-                primary: true
-              },
-              on: {
-                click: this.handleChangeDrawerAction
-              }
-            }, [
-              h('span', 'test')
-            ])
+          render: (h) => {
+            return (
+              <i-button
+                type="primary"
+                onClick={this.changeDrawerAction}>
+                test
+              </i-button>
+            )
+            // return null;
           }
         }
       ],
