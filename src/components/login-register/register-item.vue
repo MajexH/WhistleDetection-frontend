@@ -9,32 +9,50 @@
           <Button type="text" icon="ios-arrow-back"
             @click="handleSwitchItem">
           </Button>
-          <div :style="{ margin: '0 0 0 20px'}">
+          <h2 :style="{ margin: '0 0 0 90px' }">
             注册
-          </div>
+          </h2>
         </div>
       </FormItem>
       <FormItem prop="username">
-        <Input type="text" placeholder="用户名"
-          v-model="registerForm.username">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-        </Input>
+        <Input
+          type="text"
+          placeholder="用户名"
+          v-model="registerForm.username"
+          prefix="ios-person-outline"/>
       </FormItem>
       <FormItem prop="password">
-        <Input type="password" placeholder="密码"
-          v-model="registerForm.password">
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </Input>
+        <Input
+          type="password"
+          placeholder="密码"
+          v-model="registerForm.password"
+          prefix="ios-lock-outline"/>
       </FormItem>
       <FormItem prop="confirm">
-        <Input type="password" placeholder="确认密码"
-          v-model="registerForm.confirm">
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </Input>
+        <Input
+          type="password"
+          placeholder="确认密码"
+          v-model="registerForm.confirm"
+          prefix="ios-lock-outline"/>
+      </FormItem>
+      <FormItem prop="name">
+        <Input
+          placeholder="姓名"
+          prefix="ios-people-outline"
+          v-model="registerForm.name"/>
+      </FormItem>
+      <FormItem prop="email">
+        <Input
+          placeholder="邮箱"
+          prefix="ios-mail-outline"
+          v-model="registerForm.email"/>
       </FormItem>
       <FormItem>
-        <Button type="primary"
-          :loading="buttonLoading">
+        <Button
+          long
+          type="primary"
+          :loading="buttonLoading"
+          @click="register('registerForm')">
           注册
         </Button>
       </FormItem>
@@ -44,19 +62,19 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { checkNull } from '@/libs/util.js'
+import { register } from '@/api/user.js'
 
 export default {
   name: 'registerItem',
   methods: {
-    ...mapMutations([
-      'setSwitchItem'
-    ]),
-    handleSwitchItem () {
+    ...mapMutations(['setSwitchItem']),
+    handleSwitchItem() {
       this.setSwitchItem('login')
     },
-    validatePassword (rule, value, callback) {
-      if (value === '') {
-        callback(new Error('请输入你的密码'))
+    validatePassword(rule, value, callback) {
+      if (value === '' || checkNull(value)) {
+        callback(new Error('请输入您的密码'))
       } else {
         if (this.registerForm.confirm !== '') {
           this.$refs.registerForm.validateField('confirm')
@@ -64,44 +82,47 @@ export default {
         callback()
       }
     },
-    validateConfirm (rule, value, callback) {
-      if (value === '') {
-        callback(new Error('请再次输入你的密码'))
+    validateConfirm(rule, value, callback) {
+      if (value === '' || value === null || value === undefined) {
+        callback(new Error('请再次输入您的密码'))
       } else if (value !== this.registerForm.password) {
         callback(new Error('两次输入的密码不符'))
       } else {
         callback()
       }
     },
-    register (name) {
+    register(name) {
       this.buttonLoading = true
       this.$refs[name].validate(valid => {
         if (!valid) {
           this.$Message.error('请填写必填项')
         }
       })
-      // TODO:
-      this.buttonLoading = false
+      register(this.registerForm)
+        .catch(err => {
+          this.$Message.err(err.response.data)
+        })
+        .finally(() => {
+          this.buttonLoading = false
+        })
     }
   },
-  data () {
+  data() {
     return {
       buttonLoading: false,
       registerForm: {
         username: null,
         password: null,
-        confirm: null
+        confirm: null,
+        name: null,
+        email: null
       },
       registerRules: {
-        username: [
-          { required: true, message: '用户名为必填项' }
-        ],
-        password: [
-          { validator: this.validatePassword, trigger: 'blur' }
-        ],
-        confirm: [
-          { validator: this.validateConfirm, trigger: 'blur' }
-        ]
+        username: [{ required: true, message: '用户名为必填项' }],
+        password: [{ validator: this.validatePassword, trigger: 'blur' }],
+        confirm: [{ validator: this.validateConfirm, trigger: 'blur' }],
+        name: [{ required: true, message: '用户姓名为必填项' }],
+        email: [{ required: true, message: '邮箱为必填项' }]
       }
     }
   }
@@ -109,14 +130,15 @@ export default {
 </script>
 
 <style>
-  .slide-fade-enter-active {
-    transition: all .3s ease;
-  }
-  .slide-fade-enter, .slide-fade-leave-to {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  .header {
-    display: flex
-  }
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.header {
+  display: flex;
+}
 </style>

@@ -17,14 +17,24 @@ import Main from '@/components/main'
  */
 
 export default [
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   meta: {
+  //     title: 'Login - 登录',
+  //     hideInMenu: true
+  //   },
+  //   component: () => import('@/view/login/login.vue')
+  // },
   {
     path: '/login',
     name: 'login',
     meta: {
-      title: 'Login - 登录',
+      title: '登录',
+      hideInBread: true,
       hideInMenu: true
     },
-    component: () => import('@/view/login/login.vue')
+    component: () => import('@/view/newlogin/login.vue')
   },
   {
     path: '/',
@@ -146,25 +156,6 @@ export default [
     ]
   },
   {
-    path: '/error_store',
-    name: 'error_store',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'error_store_page',
-        name: 'error_store_page',
-        meta: {
-          icon: 'ios-bug',
-          title: '错误收集'
-        },
-        component: () => import('@/view/error-store/error-store.vue')
-      }
-    ]
-  },
-  {
     path: '/directive',
     name: 'directive',
     meta: {
@@ -234,15 +225,6 @@ export default [
         component: () => import('@/view/service/service-review.vue')
       }
     ]
-  },
-  {
-    path: '/newLogin',
-    name: 'newLogin',
-    meta: {
-      hideInBread: true,
-      hideInMenu: true
-    },
-    component: () => import('@/view/newlogin/login.vue')
   },
   {
     path: '/401',

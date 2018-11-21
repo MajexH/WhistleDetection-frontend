@@ -1,14 +1,26 @@
 import axios from '@/libs/axios'
 
-export const login = ({ userName, password }) => {
-  const data = {
-    userName,
-    password
-  }
+export const login = ({ username, password }) => {
   return axios.request({
-    url: 'login',
-    data,
-    method: 'post'
+    url: '/login/',
+    method: 'post',
+    data: {
+      username,
+      password
+    }
+  })
+}
+
+export const register = ({ username, password, name, email }) => {
+  return axios.request({
+    url: '/register/',
+    method: 'post',
+    data: {
+      username,
+      password,
+      name,
+      email
+    }
   })
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border
+    <Table
       :loading="loading"
       :columns="columnList"
       :data="testData">
@@ -57,12 +57,10 @@ export default {
           render: (h) => {
             return (
               <i-button
-                type="primary"
+                icon="ios-menu"
                 onClick={this.changeDrawerAction}>
-                test
               </i-button>
             )
-            // return null;
           }
         }
       ],

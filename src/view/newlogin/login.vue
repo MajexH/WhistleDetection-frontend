@@ -1,12 +1,17 @@
 <template>
-  <div class="test">
-    <login-item
-      @on-handle-register="handleRegister"
-      v-if="switchItem === 'login'">
-    </login-item>
-    <register-item
-      v-else>
-    </register-item>
+  <!-- 外层div是为了设置整个登陆背景 -->
+  <div class="login">
+    <div class="login-con">
+      <Card>
+        <login-item
+          @on-handle-register="handleRegister"
+          v-if="switchItem === 'login'">
+        </login-item>
+        <register-item
+          v-else>
+        </register-item>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -43,7 +48,5 @@ export default {
 </script>
 
 <style>
-  .test {
-    display: flex
-  }
+  @import './login.css';
 </style>

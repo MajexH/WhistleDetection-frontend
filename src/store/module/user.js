@@ -72,20 +72,10 @@ export default {
   // 出发mutation的函数，第一个参数 {commit} 表示 commit('mutationMethod', {params}) 可以有异步操作
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
-      userName = userName.trim()
-      return new Promise((resolve, reject) => {
-        login({
-          userName,
-          password
-        }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
-      })
+    async handleLogin ({ commit }, { username, password }) {
+      username = username.trim()
+      const res = await login({ username, password })
+      commit('setToken', res.data.token)
     },
     // 退出登录
     handleLogOut ({ state, commit }) {

@@ -12,9 +12,6 @@ import importDirective from '@/directive'
 import installPlugin from '@/plugin'
 import './index.less'
 import '@/assets/icons/iconfont.css'
-// 实际打包时应该不引入mock
-/* eslint-disable */
-if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
@@ -22,7 +19,7 @@ Vue.use(iView, {
 // 添加vuePreview
 Vue.use(VuePreview, {
   mainClass: 'pswp--minimal--dark',
-  barsSize: {top: 0, bottom: 0},
+  barsSize: { top: 0, bottom: 0 },
   captionEl: false,
   fullscreenEl: false,
   shareEl: false,

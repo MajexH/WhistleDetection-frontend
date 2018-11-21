@@ -5,28 +5,35 @@
       :rules="loginRules"
       :model="loginForm">
       <FormItem>
-        <div :style="{ 'text-align': 'center' }">登录</div>
+        <h2 :style="{ 'text-align': 'center' }">登录</h2>
       </FormItem>
       <FormItem prop="username">
-        <Input type="text" placeholder="用户名"
-          v-model="loginForm.username">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-        </Input>
+        <Input
+          type="text"
+          placeholder="用户名"
+          prefix="ios-person-outline"
+          v-model="loginForm.username"/>
       </FormItem>
-      <FormItem prop="password" class="login-item">
-        <Input type="password" placeholder="密码"
-          v-model="loginForm.password" >
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
-        </Input>
+      <FormItem prop="password">
+        <Input
+          type="password"
+          placeholder="密码"
+          v-model="loginForm.password"
+          prefix="ios-lock-outline"/>
       </FormItem>
       <!-- Button -->
       <FormItem>
-        <Button type="primary"
+        <Button
+          long
+          type="primary"
           :loading="buttonLoding"
           @click="login('loginForm')">
           登录
         </Button>
+        <br/>
         <Button
+          long
+          :style="{ margin: '10px 0 0 0' }"
           @click="handleRegister">
           注册
         </Button>
@@ -36,21 +43,33 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'loginItem',
   methods: {
+    ...mapActions([
+      'handleLogin'
+    ]),
     handleRegister () {
       this.$emit('on-handle-register')
     },
-    login (name) {
+    async login (name) {
       this.buttonLoding = true
       this.$refs[name].validate(valid => {
         if (!valid) {
           this.$Message.error('请填写必填项')
         }
       })
-      // TODO: API进行登录
-      this.buttonLoding = false
+      // API进行登录
+      await this.handleLogin({
+        username: this.loginForm.username,
+        password: this.loginForm.password
+      }).catch((err) => {
+        this.$Message.error(err.response.data.non_field_errors[0])
+      }).finally(() => {
+        this.buttonLoding = false
+      })
     }
   },
   data () {
