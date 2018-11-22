@@ -60,26 +60,6 @@ export default [
     ]
   },
   {
-    path: '/message',
-    name: 'message',
-    component: Main,
-    meta: {
-      hideInBread: true,
-      hideInMenu: true
-    },
-    children: [
-      {
-        path: 'message_page',
-        name: 'message_page',
-        meta: {
-          icon: 'md-notifications',
-          title: '消息中心'
-        },
-        component: () => import('@/view/single-page/message/index.vue')
-      }
-    ]
-  },
-  {
     path: '/components',
     name: 'components',
     meta: {
@@ -240,6 +220,32 @@ export default [
           title: '业务复核'
         },
         component: () => import('@/view/service/service-review.vue')
+      }
+    ]
+  },
+  {
+    path: '/fined',
+    name: 'result',
+    component: Main,
+    meta: {
+      title: '查看判定情况'
+    },
+    children: [
+      {
+        path: '',
+        name: 'fined',
+        component: () => import('@/view/result/fined.vue'),
+        meta: {
+          title: '判定罚款'
+        }
+      },
+      {
+        path: '/notFined',
+        name: 'notFined',
+        component: () => import('@/view/result/not-fined.vue'),
+        meta: {
+          title: '判定不罚款'
+        }
       }
     ]
   },
