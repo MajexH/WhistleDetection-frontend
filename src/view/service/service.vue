@@ -1,6 +1,7 @@
 <template>
   <div>
-    <service-table>
+    <service-table
+      :source="look">
     </service-table>
   </div>
 </template>

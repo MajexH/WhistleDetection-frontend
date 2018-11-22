@@ -198,7 +198,24 @@ export default [
     ]
   },
   {
+    path: '/device',
+    name: 'device',
+    component: Main,
+    children: [
+      {
+        path: '',
+        name: 'deviceLook',
+        meta: {
+          title: '设备管理',
+          icon: 'md-apps'
+        },
+        component: () => import('@/view/device/device.vue')
+      }
+    ]
+  },
+  {
     path: '/service',
+    name: 'service',
     meta: {
       icon: 'md-menu',
       title: '业务办理'
@@ -207,7 +224,7 @@ export default [
     children: [
       {
         path: '',
-        name: 'service',
+        name: 'serviceLook',
         meta: {
           icon: 'md-funnel',
           title: '业务查看'

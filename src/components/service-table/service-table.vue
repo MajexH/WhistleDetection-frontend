@@ -1,19 +1,20 @@
 <template>
-  <div>
-    <Table
+  <Card shadow>
+    <page-table
       :loading="loading"
-      :columns="columnList"
+      :columnList="columnList"
       :data="testData">
-    </Table>
+    </page-table>
     <service-drawer
       :showDrawer="showDrawer"
       @drawer-close="changeDrawerAction">
     </service-drawer>
-  </div>
+  </Card>
 </template>
 
 <script>
 import serviceDrawer from '@/components/drawer/drawer.vue'
+import pageTable from '@/components/table/table.vue'
 
 export default {
   props: {
@@ -23,14 +24,16 @@ export default {
     }
   },
   components: {
-    serviceDrawer
+    serviceDrawer,
+    pageTable
   },
   methods: {
-    changeDrawerAction () {
+    changeDrawerAction() {
+      console.log(1)
       this.showDrawer = !this.showDrawer
     }
   },
-  data () {
+  data() {
     return {
       // 设置Table的loading状态
       loading: false,
@@ -38,11 +41,11 @@ export default {
       columnList: [
         {
           title: '车牌号',
-          key: 'carNumber'
+          key: 'car_info'
         },
         {
-          title: '发生地点',
-          key: 'place'
+          title: '记录设备',
+          key: 'record_device'
         },
         {
           title: '状态',
@@ -50,36 +53,105 @@ export default {
         },
         {
           title: '创建时间',
-          key: 'time'
+          key: 'record_time'
         },
         {
           title: '审核',
-          render: (h) => {
+          render: h => {
             return (
               <i-button
                 icon="ios-menu"
-                onClick={this.changeDrawerAction}>
-              </i-button>
+                type="text"
+                onClick={this.changeDrawerAction}
+              />
             )
           }
         }
       ],
-      testData: [{
-        carNumber: '1',
-        place: 'XXXX地方',
-        status: '0',
-        time: '23232323'
-      }, {
-        carNumber: '2',
-        place: 'XXXX地方',
-        status: '0',
-        time: '23232323'
-      }]
+      testData: [
+        {
+          car_info: '1',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        },
+        {
+          car_info: '2',
+          record_device: 'XXXX设备',
+          status: '0',
+          record_time: '23232323'
+        }
+      ]
     }
   }
 }
 </script>
 
 <style>
-
 </style>

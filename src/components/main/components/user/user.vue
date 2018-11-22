@@ -21,6 +21,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'User',
   props: {
+    // TODO: 将userAvator改成用户名字
     userAvator: {
       type: String,
       default: ''

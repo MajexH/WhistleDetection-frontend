@@ -1,21 +1,18 @@
 <template>
   <div>
-    <Card style="margin-top: 5px;">
-      <Tabs value="correct">
-          <TabPane label="正确业务复核" name="correct">
-            标签一的内容
-          </TabPane>
-          <TabPane label="错误业务复核" name="wrong">
-            标签二的内容
-          </TabPane>
-      </Tabs>
-    </Card>
+    <service-table
+      :source="review">
+    </service-table>
   </div>
 </template>
 
 <script>
-export default {
+import serviceTable from '@/components/service-table/service-table'
 
+export default {
+  components: {
+    serviceTable
+  }
 }
 </script>
 
