@@ -1,6 +1,6 @@
 export default {
   /**
-   * @description token在Cookie中存储的天数，默认1天
+   * @description token在Cookie中存储的天数，默认1天(更换成userInfo)
    */
   cookieExpires: 1,
   /**

@@ -2,7 +2,7 @@ import axios from '@/libs/axios'
 
 export const login = ({ username, password }) => {
   return axios.request({
-    url: '/login/',
+    url: '/login',
     method: 'post',
     data: {
       username,
@@ -13,7 +13,7 @@ export const login = ({ username, password }) => {
 
 export const register = ({ username, password, name, email }) => {
   return axios.request({
-    url: '/register/',
+    url: '/register',
     method: 'post',
     data: {
       username,
@@ -21,23 +21,6 @@ export const register = ({ username, password, name, email }) => {
       name,
       email
     }
-  })
-}
-
-export const getUserInfo = (token) => {
-  return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
-    method: 'get'
-  })
-}
-
-export const logout = (token) => {
-  return axios.request({
-    url: 'logout',
-    method: 'post'
   })
 }
 

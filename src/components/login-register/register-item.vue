@@ -95,16 +95,16 @@ export default {
       this.buttonLoading = true
       this.$refs[name].validate(valid => {
         if (!valid) {
-          this.$Message.error('请填写必填项')
+          this.$Message.error('注册信息有误')
+        } else {
+          register(this.registerForm)
+            .then((res) => {
+              this.$Message.info('注册成功,请登录')
+              this.handleSwitchItem()
+            }).catch(() => {})
         }
       })
-      register(this.registerForm)
-        .catch(err => {
-          this.$Message.err(err.response.data)
-        })
-        .finally(() => {
-          this.buttonLoading = false
-        })
+      this.buttonLoading = false
     }
   },
   data() {
@@ -122,7 +122,11 @@ export default {
         password: [{ validator: this.validatePassword, trigger: 'blur' }],
         confirm: [{ validator: this.validateConfirm, trigger: 'blur' }],
         name: [{ required: true, message: '用户姓名为必填项' }],
-        email: [{ required: true, message: '邮箱为必填项' }]
+        email: [{
+          required: true, message: '邮箱为必填项'
+        }, {
+          type: 'email', message: '邮箱格式错误', trigger: 'blur'
+        }]
       }
     }
   }

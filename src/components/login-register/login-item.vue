@@ -54,20 +54,17 @@ export default {
     handleRegister () {
       this.$emit('on-handle-register')
     },
-    async login (name) {
+    login (name) {
       this.buttonLoding = true
-      this.$refs[name].validate(valid => {
+      this.$refs[name].validate((valid) => {
         if (!valid) {
           this.$Message.error('请填写必填项')
+        } else {
+          this.handleLogin({
+            username: this.loginForm.username,
+            password: this.loginForm.password
+          })
         }
-      })
-      // API进行登录
-      await this.handleLogin({
-        username: this.loginForm.username,
-        password: this.loginForm.password
-      }).catch((err) => {
-        this.$Message.error(err.response.data.non_field_errors[0])
-      }).finally(() => {
         this.buttonLoding = false
       })
     }

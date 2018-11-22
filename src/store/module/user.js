@@ -1,14 +1,13 @@
 import {
   login,
-  logout,
-  getUserInfo,
   getMessage,
   getContentByMsgId,
   hasRead,
   removeReaded,
   restoreTrash
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { setUserInfo, getUserInfo } from '@/libs/util'
+import router from '@/router/index.js'
 
 export default {
   // Vuex维护的所有状态
@@ -16,7 +15,7 @@ export default {
     userName: '',
     userId: '',
     avatorImgPath: '',
-    token: getToken(),
+    userInfo: getUserInfo(),
     access: '',
     hasGetInfo: false,
     messageUnreadList: [],
@@ -38,9 +37,9 @@ export default {
     setAccess (state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setUserInfo (state, token) {
       state.token = token
-      setToken(token)
+      setUserInfo(token)
     },
     setHasGetInfo (state, status) {
       state.hasGetInfo = status
@@ -72,46 +71,22 @@ export default {
   // 出发mutation的函数，第一个参数 {commit} 表示 commit('mutationMethod', {params}) 可以有异步操作
   actions: {
     // 登录
-    async handleLogin ({ commit }, { username, password }) {
+    handleLogin ({ commit }, { username, password }) {
       username = username.trim()
-      const res = await login({ username, password })
-      commit('setToken', res.data.token)
+      login({ username, password })
+        .then((res) => {
+          commit('setUserInfo', res.data.data)
+          router.push({
+            name: 'home'
+          })
+        }).catch(() => { })
     },
     // 退出登录
     handleLogOut ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
-        // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
-      })
-    },
-    // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvator', data.avator)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
-        } catch (error) {
-          reject(error)
-        }
-      })
+      // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
+      commit('setUserInfo', '')
+      commit('setAccess', [])
+      resolve()
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
     getMessageList ({ state, commit }) {

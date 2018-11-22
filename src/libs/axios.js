@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '@/config'
+import { Message } from 'iview'
 
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 
@@ -8,8 +9,6 @@ let request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
-  // TODO:
-  // 判断请求路径 登录注册路径不需要去带token头
   return config
 }, err => {
   console.log(err)
@@ -17,9 +16,12 @@ request.interceptors.request.use((config) => {
 })
 
 request.interceptors.response.use((response) => {
-  console.log(response)
-  const { data, status } = response
-  return { data, status }
+  const { data } = response
+  if (!data.status) {
+    Message.error(data.msg)
+    return Promise.reject(data.status)
+  }
+  return { data }
 }, (err) => {
   return Promise.reject(err)
 })

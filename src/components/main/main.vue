@@ -39,7 +39,6 @@ import TagsNav from './components/tags-nav'
 import User from './components/user'
 import Fullscreen from './components/fullscreen'
 import Language from './components/language'
-import ErrorStore from './components/error-store'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { getNewTagList, getNextRoute, routeEqual } from '@/libs/util'
 import routers from '@/router/routers'
@@ -54,7 +53,6 @@ export default {
     Language,
     TagsNav,
     Fullscreen,
-    ErrorStore,
     User
   },
   data () {
