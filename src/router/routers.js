@@ -96,15 +96,6 @@ export default [
         component: () => import('@/view/components/cropper/cropper.vue')
       },
       {
-        path: 'tables_page',
-        name: 'tables_page',
-        meta: {
-          icon: 'md-grid',
-          title: '多功能表格'
-        },
-        component: () => import('@/view/components/tables/tables.vue')
-      },
-      {
         path: 'icons_page',
         name: 'icons_page',
         meta: {
@@ -181,9 +172,12 @@ export default [
     path: '/device',
     name: 'device',
     component: Main,
+    meta: {
+      hideInBread: true
+    },
     children: [
       {
-        path: '',
+        path: 'look',
         name: 'deviceLook',
         meta: {
           title: '设备管理',
@@ -203,7 +197,7 @@ export default [
     component: Main,
     children: [
       {
-        path: '',
+        path: 'look',
         name: 'serviceLook',
         meta: {
           icon: 'md-funnel',
@@ -224,7 +218,7 @@ export default [
     ]
   },
   {
-    path: '/fined',
+    path: '/result',
     name: 'result',
     component: Main,
     meta: {
@@ -232,7 +226,7 @@ export default [
     },
     children: [
       {
-        path: '',
+        path: 'fined',
         name: 'fined',
         component: () => import('@/view/result/fined.vue'),
         meta: {
@@ -240,7 +234,7 @@ export default [
         }
       },
       {
-        path: '/notFined',
+        path: 'notFined',
         name: 'notFined',
         component: () => import('@/view/result/not-fined.vue'),
         meta: {

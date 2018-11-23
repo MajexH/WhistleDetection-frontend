@@ -1,24 +1,66 @@
 <template>
-  <div>
-    <page-table
-      :loading="loading"
-      :columnList="columnList"
-      :data="data">
-    </page-table>
-  </div>
+  <Card>
+    <tables
+      editable
+      searchable
+      search-place="top"
+      v-model="data"
+      :columns="columns"
+      @on-save-edit="handleSaveEdit">
+    </tables>
+  </Card>
 </template>
 
 <script>
-import pageTable from '@/components/table/table.vue'
+import Tables from '_c/tables'
+import { getDevice, putDevice } from '@/api/device.js'
 
 export default {
   components: {
-    pageTable
+    Tables
+  },
+  methods: {
+    handleSaveEdit(value) {
+      // 先put
+      putDevice(this.data[value.row.initRowIndex])
+        .then(() => {
+          this.$Message.info('修改成功')
+        })
+        .catch(() => {})
+    }
+  },
+  mounted() {
+    getDevice()
+      .then((res) => {
+        this.data = res.data.data
+      })
+      .catch(() => {})
   },
   data() {
     return {
       loading: false,
-      columnList: [],
+      columns: [
+        {
+          title: '设备编号',
+          key: 'device_id',
+          editable: true
+        },
+        {
+          title: '设备位置',
+          key: 'location',
+          editable: true
+        },
+        {
+          title: 'ip地址',
+          key: 'ip',
+          editable: true
+        },
+        {
+          title: '设备描述',
+          key: 'description',
+          editable: true
+        }
+      ],
       data: []
     }
   }
