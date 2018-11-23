@@ -11,6 +11,7 @@
 <script>
 import pageTable from '@/components/table/table.vue'
 import { getNotFined } from '@/api/fine.js'
+import moment from '@/libs/moment.js'
 
 export default {
   components: {
@@ -33,7 +34,14 @@ export default {
         },
         {
           title: '违章时间',
-          key: 'record_time'
+          key: 'record_time',
+          render: (h, params) => {
+            return (
+              <span>
+                {moment(params.row.record_time).format('llll')}
+              </span>
+            )
+          }
         },
         {
           title: '是否违章',

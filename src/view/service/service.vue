@@ -17,6 +17,7 @@
 import serviceDrawer from '@/components/drawer/drawer.vue'
 import pageTable from '@/components/table/table.vue'
 import { getWhistle } from '@/api/whistle.js'
+import moment from '@/libs/moment.js'
 
 export default {
   components: {
@@ -58,8 +59,15 @@ export default {
           key: 'record_device'
         },
         {
-          title: '创建时间',
-          key: 'record_time'
+          title: '违章时间',
+          key: 'record_time',
+          render: (h, params) => {
+            return (
+              <span>
+                {moment(params.row.record_time).format('llll')}
+              </span>
+            )
+          }
         },
         {
           title: '审核',

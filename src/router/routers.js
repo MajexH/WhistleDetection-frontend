@@ -17,15 +17,6 @@ import Main from '@/components/main'
  */
 
 export default [
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   meta: {
-  //     title: 'Login - 登录',
-  //     hideInMenu: true
-  //   },
-  //   component: () => import('@/view/login/login.vue')
-  // },
   {
     path: '/login',
     name: 'login',
@@ -55,116 +46,7 @@ export default [
           notCache: true,
           icon: 'md-home'
         },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
-  },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      icon: 'logo-buffer',
-      title: '组件'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'count_to_page',
-        name: 'count_to_page',
-        meta: {
-          icon: 'md-trending-up',
-          title: '数字渐变'
-        },
-        component: () => import('@/view/components/count-to/count-to.vue')
-      },
-      {
-        path: 'drag_list_page',
-        name: 'drag_list_page',
-        meta: {
-          icon: 'ios-infinite',
-          title: '拖拽列表'
-        },
-        component: () => import('@/view/components/drag-list/drag-list.vue')
-      },
-      {
-        path: 'cropper_page',
-        name: 'cropper_page',
-        meta: {
-          icon: 'md-crop',
-          title: '图片裁剪'
-        },
-        component: () => import('@/view/components/cropper/cropper.vue')
-      },
-      {
-        path: 'icons_page',
-        name: 'icons_page',
-        meta: {
-          icon: '_bear',
-          title: '自定义图标'
-        },
-        component: () => import('@/view/components/icons/icons.vue')
-      }
-    ]
-  },
-  {
-    path: '/tools_methods',
-    name: 'tools_methods',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'tools_methods_page',
-        name: 'tools_methods_page',
-        meta: {
-          icon: 'ios-hammer',
-          title: '工具方法',
-          beforeCloseName: 'before_close_normal'
-        },
-        component: () => import('@/view/tools-methods/tools-methods.vue')
-      }
-    ]
-  },
-  {
-    path: '/directive',
-    name: 'directive',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'directive_page',
-        name: 'directive_page',
-        meta: {
-          icon: 'ios-navigate',
-          title: '指令'
-        },
-        component: () => import('@/view/directive/directive.vue')
-      }
-    ]
-  },
-  {
-    path: '/user',
-    name: 'userManageMain',
-    redirect: '/user/manage',
-    meta: {
-      hideInBread: true,
-      notCache: true,
-      title: '用户管理'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'manage',
-        name: 'userManage',
-        meta: {
-          // TODO:access 定义能访问的角色
-          title: '用户管理',
-          icon: 'md-planet'
-        },
-        component: () => import('@/view/user/user-manage.vue')
+        component: () => import('@/view/single-page/home.vue')
       }
     ]
   },
@@ -222,7 +104,8 @@ export default [
     name: 'result',
     component: Main,
     meta: {
-      title: '查看判定情况'
+      title: '查看判定情况',
+      icon: 'ios-grid-outline'
     },
     children: [
       {
@@ -230,7 +113,8 @@ export default [
         name: 'fined',
         component: () => import('@/view/result/fined.vue'),
         meta: {
-          title: '判定违章'
+          title: '判定违章',
+          icon: 'md-list'
         }
       },
       {
@@ -238,7 +122,8 @@ export default [
         name: 'notFined',
         component: () => import('@/view/result/not-fined.vue'),
         meta: {
-          title: '判定不违章'
+          title: '判定不违章',
+          icon: 'md-list'
         }
       }
     ]

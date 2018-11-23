@@ -74,9 +74,7 @@ export default {
       this.pageSize = value
     },
     handleChange(e) {
-      this.insideData = this.data.filter(
-        item => item[this.searchKey].indexOf(this.searchItem) > -1
-      )
+      this.insideData = this.data.filter(item => String(item[this.searchKey]).indexOf(this.searchItem) > -1)
     }
   },
   data() {
