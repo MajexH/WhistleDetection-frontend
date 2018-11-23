@@ -46,16 +46,16 @@ export default {
       serviceData: [],
       columnList: [
         {
+          title: '记录ID',
+          key: 'id'
+        },
+        {
           title: '车牌号',
           key: 'car_info'
         },
         {
           title: '记录设备',
           key: 'record_device'
-        },
-        {
-          title: '状态',
-          key: 'status'
         },
         {
           title: '创建时间',

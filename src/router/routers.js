@@ -230,7 +230,7 @@ export default [
         name: 'fined',
         component: () => import('@/view/result/fined.vue'),
         meta: {
-          title: '判定罚款'
+          title: '判定违章'
         }
       },
       {
@@ -238,7 +238,7 @@ export default [
         name: 'notFined',
         component: () => import('@/view/result/not-fined.vue'),
         meta: {
-          title: '判定不罚款'
+          title: '判定不违章'
         }
       }
     ]
