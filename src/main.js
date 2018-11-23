@@ -20,8 +20,8 @@ Vue.use(iView, {
 Vue.use(VuePreview, {
   mainClass: 'pswp--minimal--dark',
   barsSize: { top: 0, bottom: 0 },
-  captionEl: false,
-  fullscreenEl: false,
+  captionEl: true,
+  fullscreenEl: true,
   shareEl: false,
   bgOpacity: 0.85,
   tapToClose: true,

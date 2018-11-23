@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     handleSaveEdit(value) {
-      // 先put
       putDevice(this.data[value.row.initRowIndex])
         .then(() => {
           this.$Message.info('修改成功')

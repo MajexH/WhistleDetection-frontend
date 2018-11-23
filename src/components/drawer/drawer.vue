@@ -1,24 +1,36 @@
 <template>
   <Drawer
     v-model="show"
-    width="500"
-    :title="cardNumber"
-    @on-close="handleClose">
+    width="600"
+    :title="title"
+    @on-close="handleClose"
+    @on-visible-change="handle">
     <Row class="drawer-item">
-      <video-player></video-player>
+      <video-player
+        :options="options">
+      </video-player>
     </Row>
     <Row class="drawer-item">
-      <Col style="height: 100px">
-        <vue-preview :slides="slide1"></vue-preview>
-      </Col>
+      <vue-preview
+        :slides="slide1"></vue-preview>
     </Row>
-    <Row class="row">
-      <Col>
-        <ButtonGroup>
-          <Button type="primary">通过</Button>
-          <Button type="error">不通过</Button>
-        </ButtonGroup>
-      </Col>
+    <Row class="drawer-item">
+      <Form ref="form"
+        :model="form"
+        :rules="rules">
+        <FormItem prop="reason">
+          <Input
+            placeholder="罚款评判理由"
+            v-model="form.reason"
+            />
+        </FormItem>
+      </Form>
+    </Row>
+    <Row>
+      <ButtonGroup>
+        <Button type="primary" @click="fine(true)">违法</Button>
+        <Button type="error" @click="fine(false)">不违法</Button>
+      </ButtonGroup>
     </Row>
   </Drawer>
 </template>
@@ -26,88 +38,135 @@
 <script>
 import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
+import { operateWhistle, operateReview } from '@/api/whistle.js'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     videoPlayer
+  },
+  computed: {
+    ...mapState({
+      row: state => state.whistle.row
+    })
   },
   props: {
     showDrawer: {
       type: Boolean,
       default: false
     },
-    cardNumber: {
-      type: String,
-      required: false,
-      default: '无车牌'
-    },
-    // 前一个页面传递给后一个页面的whistle的id值
-    id: {
-      type: String,
-      required: false
+    // 指示当前打开的页面是啥
+    source: {
+      type: String
     }
   },
   data() {
+    this.baseUrl = process.env.NODE_ENV === 'development' ? this.$config.baseUrl.dev : this.$config.baseUrl.pro
     return {
+      options: {},
+      title: 'test',
       show: this.showDrawer,
-      slide1: [
-        {
-          src:
-            'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_b.jpg',
-          msrc:
-            'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_m.jpg',
-          alt: 'picture1',
-          title: 'Image Caption 1',
-          w: 600,
-          h: 400
-        },
-        {
-          src:
-            'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_b.jpg',
-          msrc:
-            'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_m.jpg',
-          alt: 'picture2',
-          title: 'Image Caption 2',
-          w: 1200,
-          h: 900
-        }
-      ]
+      slide1: [],
+      form: {
+        reason: null
+      },
+      rules: {
+        reason: [{
+          required: true, message: '请输入判罚原因'
+        }]
+      }
     }
   },
   methods: {
+    handle(value) {
+      if (value) {
+        this.options = {
+          autoplay: false,
+          muted: false,
+          loop: false,
+          preload: 'auto',
+          language: 'zh-CN',
+          aspectRatio: '16:9',
+          fluid: true,
+          sources: [{
+            type: 'video/mp4',
+            src: this.baseUrl + '/flowvideo/' + this.row.store_location
+          }],
+          notSupportedMessage: '此视频暂无法播放，请稍后再试'
+        }
+        this.title = this.row.car_info
+        this.slide1 = [
+          {
+            src:
+              this.baseUrl + '/fullimage/' + this.row.store_location,
+            msrc:
+              this.baseUrl + '/fullimage/' + this.row.store_location,
+            alt: 'picture1',
+            title: 'Image Caption 1',
+            w: 1200,
+            h: 900
+          },
+          {
+            src:
+              this.baseUrl + '/featureimage/' + this.row.store_location,
+            msrc:
+              this.baseUrl + '/featureimage/' + this.row.store_location,
+            alt: 'picture2',
+            title: 'Image Caption 2',
+            w: 1200,
+            h: 900
+          }
+        ]
+        this.$nextTick(() => {
+          for (let item of document.getElementsByTagName('img')) {
+            item.style.width = '500px'
+          }
+        })
+      }
+    },
     handleClose() {
       this.$emit('drawer-close')
     },
-    onEscapeKeyUp(event) {
-      if (event.which === 27) {
-        this.$emit('drawer-close')
-      }
+    fine(illegal) {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          // 请求API
+          if (this.source === 'service') {
+            operateWhistle({
+              whistle: this.row.id,
+              user: JSON.parse(this.$store.state.user.userInfo).id,
+              is_illegal: illegal,
+              reason: this.form.reason
+            }).then(() => {
+              document.location.reload()
+            }).catch(() => {})
+          } else if (this.source === 'review') {
+            console.log('review')
+            operateReview({
+              whistle: this.row.id,
+              user: JSON.parse(this.$store.state.user.userInfo).id,
+              is_illegal: illegal,
+              reason: this.form.reason
+            }).then(() => {
+              document.location.reload()
+            }).catch(() => {})
+          }
+        }
+      })
     }
   },
   watch: {
     showDrawer: function(newValue) {
       this.show = newValue
     }
-  },
-  beforeMount() {
-    window.addEventListener('keyup', this.onEscapeKeyUp)
-  },
-  mounted() {
-    document.getElementsByClassName('my-gallery')[0].style['float'] = 'left'
-  },
-  beforeDestroy() {
-    window.removeEventListener('keyup', this.onEscapeKeyUp)
   }
 }
 </script>
 
 <style scoped>
-.drawer-item {
-  margin: 0 0 5px 0;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 0 0 5px 0;
-}
-.row {
-  position: relative;
-}
+  .drawer-item {
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 0 5px 0;
+  }
 </style>
