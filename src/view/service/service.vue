@@ -47,7 +47,7 @@ export default {
       serviceData: [],
       columnList: [
         {
-          title: '记录ID',
+          title: '鸣笛编号',
           key: 'id'
         },
         {
@@ -57,6 +57,10 @@ export default {
         {
           title: '记录设备',
           key: 'record_device'
+        },
+        {
+          title: '拍摄位置',
+          key: 'record_location'
         },
         {
           title: '违章时间',

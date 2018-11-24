@@ -14,7 +14,9 @@
       <vue-preview
         :slides="slide1"></vue-preview>
     </Row>
-    <Row class="drawer-item">
+    <Row
+      class="drawer-item"
+      v-if="showButton">
       <Form ref="form"
         :model="form"
         :rules="rules">
@@ -26,7 +28,7 @@
         </FormItem>
       </Form>
     </Row>
-    <Row>
+    <Row v-if="showButton">
       <ButtonGroup>
         <Button type="primary" @click="fine(true)">违法</Button>
         <Button type="error" @click="fine(false)">不违法</Button>
@@ -57,7 +59,14 @@ export default {
     },
     // 指示当前打开的页面是啥
     source: {
-      type: String
+      type: String,
+      required: false
+    },
+    // 展示button
+    showButton: {
+      type: [Boolean],
+      required: false,
+      default: () => true
     }
   },
   data() {
@@ -132,6 +141,7 @@ export default {
         if (valid) {
           // 请求API
           if (this.source === 'service') {
+            console.log('service')
             operateWhistle({
               whistle: this.row.id,
               user: JSON.parse(this.$store.state.user.userInfo).id,
@@ -142,6 +152,12 @@ export default {
             }).catch(() => {})
           } else if (this.source === 'review') {
             console.log('review')
+            console.log({
+              whistle: this.row.id,
+              user: JSON.parse(this.$store.state.user.userInfo).id,
+              is_illegal: illegal,
+              reason: this.form.reason
+            })
             operateReview({
               whistle: this.row.id,
               user: JSON.parse(this.$store.state.user.userInfo).id,

@@ -3,7 +3,6 @@
     <Col span="8" offset="8">
       <h1>
         欢迎来到鸣笛检测系统
-        {{ time }}
       </h1>
     </Col>
   </Row>
