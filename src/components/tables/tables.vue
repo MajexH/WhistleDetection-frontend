@@ -1,15 +1,14 @@
 <template>
   <div>
     <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
-      <Select v-model="searchKey" class="search-col">
+      <Select v-model="searchKey" class="search-col" @on-change="selectChange" >
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
       <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
     </div>
     <Table
       ref="tablesMain"
-      :data="insideTableData"
+      :data="customData"
       :columns="insideColumns"
       :stripe="stripe"
       :border="border"
@@ -38,6 +37,14 @@
       <slot name="footer" slot="footer"></slot>
       <slot name="loading" slot="loading"></slot>
     </Table>
+    <Page
+      :total="total"
+      show-sizer
+      show-elevator
+      show-total
+      @on-change="getPageNumber"
+      @on-page-size-change="getPageSize">
+    </Page>
     <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
       <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
@@ -55,6 +62,15 @@ import handleBtns from './handle-btns'
 import './index.less'
 export default {
   name: 'Tables',
+  computed: {
+    customData() {
+      const start = (this.pageNumber - 1) * this.pageSize
+      return this.insideTableData.slice(start, start + this.pageSize)
+    },
+    total() {
+      return this.insideTableData.length
+    }
+  },
   props: {
     value: {
       type: Array,
@@ -143,6 +159,8 @@ export default {
    */
   data() {
     return {
+      pageNumber: 1,
+      pageSize: 10,
       insideColumns: [],
       insideTableData: [],
       edittingCellId: '',
@@ -152,6 +170,15 @@ export default {
     }
   },
   methods: {
+    getPageNumber(value) {
+      this.pageNumber = value
+    },
+    getPageSize(value) {
+      this.pageSize = value
+    },
+    selectChange() {
+      this.handleSearch()
+    },
     suportEdit(item, index) {
       item.render = (h, params) => {
         return h(TablesEdit, {
@@ -166,9 +193,8 @@ export default {
               this.edittingText = val
             },
             'on-start-edit': params => {
-              this.edittingCellId = `editting-${params.index}-${
-                params.column.key
-              }`
+              this.edittingText = this.value[params.row.initRowIndex][params.column.key]
+              this.edittingCellId = `editting-${params.index}-${params.column.key}`
               this.$emit('on-start-edit', params)
             },
             'on-cancel-edit': params => {
@@ -176,12 +202,14 @@ export default {
               this.$emit('on-cancel-edit', params)
             },
             'on-save-edit': params => {
-              this.value[params.row.initRowIndex][params.column.key] = this.edittingText
-              this.$emit('input', this.value)
-              this.$emit(
-                'on-save-edit',
-                Object.assign(params, { value: this.edittingText })
-              )
+              if (this.value[params.row.initRowIndex][params.column.key] !== this.edittingText) {
+                this.value[params.row.initRowIndex][params.column.key] = this.edittingText
+                this.$emit('input', this.value)
+                this.$emit(
+                  'on-save-edit',
+                  Object.assign(params, { value: this.edittingText })
+                )
+              }
               this.edittingCellId = ''
             }
           }
@@ -219,6 +247,7 @@ export default {
             : ''
     },
     handleClear(e) {
+      console.log(e.target.value)
       if (e.target.value === '') this.insideTableData = this.value
     },
     handleSearch() {
@@ -271,6 +300,9 @@ export default {
     }
   },
   watch: {
+    searchValue(newValue) {
+      this.handleSearch(newValue)
+    },
     columns(columns) {
       this.handleColumns(columns)
       this.setDefaultSearchKey()

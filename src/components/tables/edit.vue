@@ -2,7 +2,9 @@
   <div class="tables-edit-outer">
     <div v-if="!isEditting" class="tables-edit-con">
       <span class="value-con">{{ value }}</span>
-      <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button>
+      <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text">
+        <Icon type="md-create"></Icon>
+      </Button>
     </div>
     <div v-else class="tables-editting-con">
       <Input :value="value" @input="handleInput" class="tables-edit-input"/>
@@ -44,30 +46,30 @@ export default {
 </script>
 
 <style lang="less">
-.tables-edit-outer{
-  height: 100%;
-  .tables-edit-con{
-    position: relative;
-    height: 100%;
-    .value-con{
-      vertical-align: middle;
-    }
-    .tables-edit-btn{
-      position: absolute;
-      right: 10px;
-      top: 0;
-      display: none;
-    }
-    &:hover{
+  .tables-edit-outer{
+    height: 20px;
+    .tables-edit-con{
+      position: relative;
+      height: 100%;
+      .value-con{
+        vertical-align: middle;
+      }
       .tables-edit-btn{
-        display: inline-block;
+        position: absolute;
+        right: 10px;
+        top: 0;
+        display: none;
+      }
+      &:hover{
+        .tables-edit-btn{
+          display: inline-block;
+        }
+      }
+    }
+    .tables-editting-con{
+      .tables-edit-input{
+        width: ~"calc(100% - 60px)";
       }
     }
   }
-  .tables-editting-con{
-    .tables-edit-input{
-      width: ~"calc(100% - 60px)";
-    }
-  }
-}
 </style>
