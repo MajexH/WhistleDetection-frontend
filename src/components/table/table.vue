@@ -2,7 +2,9 @@
   <div>
     <Row :style="{ margin: '5px' }" :gutter="5">
       <Col span="3">
-        <Select v-model="searchKey">
+        <Select
+          v-model="searchKey"
+          @on-change="handleSelect">
           <Option
             v-for="item in columnList"
             v-if="item.key !== 'handle'"
@@ -13,7 +15,10 @@
         </Select>
       </Col>
       <Col span="6">
-        <Input @on-change="handleChange" v-model="searchItem" clearable/>
+        <Input
+          placeholder="输入关键字搜索"
+          @on-change="handleChange"
+          v-model="searchItem" clearable/>
       </Col>
     </Row>
     <Row>
@@ -63,6 +68,9 @@ export default {
     ...mapMutations([
       'setRow'
     ]),
+    handleSelect() {
+      this.handleChange()
+    },
     // 设置当前点击的行
     onClickRow(value) {
       this.setRow(value)
@@ -74,14 +82,16 @@ export default {
       this.pageSize = value
     },
     handleChange(e) {
-      this.insideData = this.data.filter(item => String(item[this.searchKey]).indexOf(this.searchItem) > -1)
+      this.insideData = this.data.filter(item => {
+        return String(item[this.searchKey]).indexOf(this.searchItem) > -1
+      })
     }
   },
   data() {
     return {
       pageNumber: 1,
       pageSize: 10,
-      searchItem: null,
+      searchItem: '',
       searchKey: this.columnList[0].key,
       insideData: this.data
     }

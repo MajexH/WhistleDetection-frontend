@@ -28,14 +28,19 @@
         :rules="rules">
         <FormItem prop="reason">
           <Input
-            placeholder="罚款评判理由"
+            placeholder="输入原因"
             v-model="form.reason"
             />
         </FormItem>
       </Form>
     </Row>
     <Row v-if="showButton">
-      <ButtonGroup>
+      <Button
+        v-if="switchRevoke"
+        type="error"
+        @click="handleRevoke">撤销</Button>
+      <ButtonGroup
+        v-else>
         <Button type="primary" @click="fine(true)">违法</Button>
         <Button type="error" @click="fine(false)">不违法</Button>
       </ButtonGroup>
@@ -46,7 +51,7 @@
 <script>
 import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
-import { operateWhistle, operateReview } from '@/api/whistle.js'
+import { operateWhistle, operateOverview } from '@/api/whistle.js'
 import { mapState } from 'vuex'
 import { getColumns } from '@/libs/util.js'
 
@@ -79,6 +84,7 @@ export default {
   data() {
     this.baseUrl = process.env.NODE_ENV === 'development' ? this.$config.baseUrl.dev : this.$config.baseUrl.pro
     return {
+      switchRevoke: false,
       columns: getColumns(),
       options: {},
       title: 'test',
@@ -90,7 +96,7 @@ export default {
       },
       rules: {
         reason: [{
-          required: true, message: '请输入判罚原因'
+          required: true, message: '请输入原因'
         }]
       }
     }
@@ -115,6 +121,9 @@ export default {
         this.title = this.row.car_info
         this.data = []
         this.data.push(this.row)
+        if (this.row.is_dispose) {
+          this.switchRevoke = true
+        }
         this.slide1 = [
           {
             src:
@@ -147,29 +156,33 @@ export default {
     handleClose() {
       this.$emit('drawer-close')
     },
-    fine(illegal) {
+    handleRevoke() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          // 请求API
-          if (this.source === 'service') {
-            operateWhistle({
+          if (this.source === 'review') {
+            operateOverview({
               whistle: this.row.id,
               user: JSON.parse(this.$store.state.user.userInfo).id,
-              is_illegal: illegal,
-              reason: this.form.reason
-            }).then(() => {
-              document.location.reload()
-            }).catch(() => {})
-          } else if (this.source === 'review') {
-            operateReview({
-              whistle: this.row.id,
-              user: JSON.parse(this.$store.state.user.userInfo).id,
-              is_illegal: illegal,
               reason: this.form.reason
             }).then(() => {
               document.location.reload()
             }).catch(() => {})
           }
+        }
+      })
+    },
+    fine(illegal) {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          // 请求API
+          operateWhistle({
+            whistle: this.row.id,
+            user: JSON.parse(this.$store.state.user.userInfo).id,
+            is_illegal: illegal,
+            reason: this.form.reason
+          }).then(() => {
+            document.location.reload()
+          }).catch(() => {})
         }
       })
     }

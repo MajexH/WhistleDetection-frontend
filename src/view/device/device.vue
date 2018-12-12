@@ -79,11 +79,15 @@ export default {
       this.showModal = true
     },
     handleSaveEdit(value) {
+      console.log(value)
       putDevice(this.data[value.row.initRowIndex])
         .then(() => {
           this.$Message.info('修改成功')
         })
-        .catch(() => {})
+        .catch(() => {
+          // 在异常时重置该项值
+          this.data[value.row.initRowIndex][value.column.key] = value.row[value.column.key]
+        })
     }
   },
   mounted() {

@@ -101,9 +101,38 @@ export default [
         name: 'overview',
         meta: {
           title: '业务总览',
-          icon: 'ios-grid-outline'
+          icon: 'ios-settings'
         },
         component: () => import('@/view/service/service-review.vue')
+      }
+    ]
+  },
+  {
+    path: '/result',
+    name: 'result',
+    component: Main,
+    meta: {
+      title: '查看判定情况',
+      icon: 'ios-grid-outline'
+    },
+    children: [
+      {
+        path: 'fined',
+        name: 'fined',
+        component: () => import('@/view/result/fined.vue'),
+        meta: {
+          title: '判定违章',
+          icon: 'md-list'
+        }
+      },
+      {
+        path: 'notFined',
+        name: 'notFined',
+        component: () => import('@/view/result/not-fined.vue'),
+        meta: {
+          title: '判定不违章',
+          icon: 'md-list'
+        }
       }
     ]
   },

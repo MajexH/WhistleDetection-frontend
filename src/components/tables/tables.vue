@@ -283,7 +283,6 @@ export default {
             : ''
     },
     handleClear(e) {
-      console.log(e.target.value)
       if (e.target.value === '') this.insideTableData = this.value
     },
     handleSearch() {

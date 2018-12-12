@@ -27,14 +27,13 @@ export const operateWhistle = ({ whistle, user, is_illegal, reason }) => {
   })
 }
 
-export const operateReview = ({ whistle, user, is_illegal, reason }) => {
+export const operateOverview = ({ whistle, user, reason }) => {
   return axios.request({
-    url: '/reoperate',
+    url: '/repeal',
     method: 'post',
     data: {
       whistle,
       user,
-      is_illegal,
       reason
     }
   })
