@@ -22,7 +22,7 @@
           <div class="tag-nav-wrapper">
             <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div>
-          <Content class="content-wrapper">
+          <Content class="content-wrapper background">
             <keep-alive :include="cacheList">
               <router-view/>
             </keep-alive>
@@ -170,3 +170,13 @@ export default {
   }
 }
 </script>
+
+<style scope>
+  .background {
+    background-image: url('../../assets/images/police.jpg');
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    background-position:bottom right;
+    background-size: 200px 200px;
+  }
+</style>
