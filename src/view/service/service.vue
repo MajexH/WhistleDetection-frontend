@@ -76,6 +76,8 @@ export default {
         {
           title: '审核',
           key: 'handle',
+          fixed: 'right',
+          width: 120,
           render: h => {
             return (
               <i-button

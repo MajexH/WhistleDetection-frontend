@@ -9,17 +9,7 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
-  data() {
-    return {
-      time: moment().format('YYYY-MM-DD')
-    }
-  },
-  mounted() {
-    console.log(moment)
-  }
 }
 </script>
 

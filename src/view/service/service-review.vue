@@ -74,8 +74,10 @@ export default {
           }
         },
         {
-          title: '审核',
+          title: '操作',
           key: 'handle',
+          fixed: 'right',
+          width: 120,
           render: h => {
             return (
               <i-button

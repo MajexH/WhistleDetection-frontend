@@ -74,26 +74,36 @@ export default [
     name: 'service',
     meta: {
       icon: 'md-menu',
-      title: '业务办理'
+      hideInBread: true
     },
     component: Main,
     children: [
       {
-        path: 'look',
+        path: '',
         name: 'serviceLook',
         meta: {
           icon: 'md-funnel',
           title: '业务查看'
         },
         component: () => import('@/view/service/service.vue')
-      },
+      }
+    ]
+  },
+  {
+    path: '/overview',
+    name: 'overviewMain',
+    component: Main,
+    meta: {
+      hideInBread: true,
+      icon: 'ios-grid-outline'
+    },
+    children: [
       {
-        path: 'serviceCheck',
-        name: 'serviceCheck',
+        path: '',
+        name: 'overview',
         meta: {
-          // TODO:access: ['super_admin'],
-          icon: 'md-funnel',
-          title: '业务复核'
+          title: '业务总览',
+          icon: 'ios-grid-outline'
         },
         component: () => import('@/view/service/service-review.vue')
       }

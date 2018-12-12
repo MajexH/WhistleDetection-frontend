@@ -128,7 +128,7 @@ export default {
         ]
         this.$nextTick(() => {
           for (let item of document.getElementsByTagName('img')) {
-            item.style.width = '500px'
+            item.style.width = '100%'
           }
         })
       }
@@ -141,7 +141,6 @@ export default {
         if (valid) {
           // 请求API
           if (this.source === 'service') {
-            console.log('service')
             operateWhistle({
               whistle: this.row.id,
               user: JSON.parse(this.$store.state.user.userInfo).id,
@@ -151,13 +150,6 @@ export default {
               document.location.reload()
             }).catch(() => {})
           } else if (this.source === 'review') {
-            console.log('review')
-            console.log({
-              whistle: this.row.id,
-              user: JSON.parse(this.$store.state.user.userInfo).id,
-              is_illegal: illegal,
-              reason: this.form.reason
-            })
             operateReview({
               whistle: this.row.id,
               user: JSON.parse(this.$store.state.user.userInfo).id,
