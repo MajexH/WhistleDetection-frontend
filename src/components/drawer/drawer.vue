@@ -6,6 +6,12 @@
     @on-close="handleClose"
     @on-visible-change="handle">
     <Row class="drawer-item">
+      <Table
+        :columns="columns"
+        :data="data">
+      </Table>
+    </Row>
+    <Row class="drawer-item">
       <video-player
         :options="options">
       </video-player>
@@ -42,6 +48,7 @@ import 'video.js/dist/video-js.css'
 import { videoPlayer } from 'vue-video-player'
 import { operateWhistle, operateReview } from '@/api/whistle.js'
 import { mapState } from 'vuex'
+import { getColumns } from '@/libs/util.js'
 
 export default {
   components: {
@@ -72,8 +79,10 @@ export default {
   data() {
     this.baseUrl = process.env.NODE_ENV === 'development' ? this.$config.baseUrl.dev : this.$config.baseUrl.pro
     return {
+      columns: getColumns(),
       options: {},
       title: 'test',
+      data: [],
       show: this.showDrawer,
       slide1: [],
       form: {
@@ -104,6 +113,8 @@ export default {
           notSupportedMessage: '此视频暂无法播放，请稍后再试'
         }
         this.title = this.row.car_info
+        this.data = []
+        this.data.push(this.row)
         this.slide1 = [
           {
             src:

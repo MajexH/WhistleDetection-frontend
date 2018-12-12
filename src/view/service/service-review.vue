@@ -7,6 +7,7 @@
     </page-table>
     <service-drawer
       :source="'review'"
+      :columnList="columnList"
       :showDrawer="showDrawer"
       @drawer-close="onDrawerCloes">
     </service-drawer>
@@ -17,7 +18,7 @@
 import serviceDrawer from '@/components/drawer/drawer.vue'
 import pageTable from '@/components/table/table.vue'
 import { getReview } from '@/api/whistle.js'
-import moment from '@/libs/moment.js'
+import { getColumns } from '@/libs/util.js'
 
 export default {
   components: {
@@ -39,56 +40,28 @@ export default {
     const res = await getReview().catch(() => {})
     this.loading = false
     this.serviceData = res.data.data
+    this.columnList.push({
+      title: '操作',
+      key: 'handle',
+      fixed: 'right',
+      width: 120,
+      render: h => {
+        return (
+          <i-button
+            icon="ios-menu"
+            type="text"
+            onClick={this.changeDrawerAction}
+          />
+        )
+      }
+    })
   },
   data() {
     return {
       loading: false,
       showDrawer: false,
       serviceData: [],
-      columnList: [
-        {
-          title: '鸣笛编号',
-          key: 'id'
-        },
-        {
-          title: '车牌号',
-          key: 'car_info'
-        },
-        {
-          title: '记录设备',
-          key: 'record_device'
-        },
-        {
-          title: '拍摄位置',
-          key: 'record_location'
-        },
-        {
-          title: '违章时间',
-          key: 'record_time',
-          render: (h, params) => {
-            return (
-              <span>
-                {moment(params.row.record_time).format('llll')}
-              </span>
-            )
-          }
-        },
-        {
-          title: '操作',
-          key: 'handle',
-          fixed: 'right',
-          width: 120,
-          render: h => {
-            return (
-              <i-button
-                icon="ios-menu"
-                type="text"
-                onClick={this.changeDrawerAction}
-              />
-            )
-          }
-        }
-      ]
+      columnList: getColumns()
     }
   }
 }

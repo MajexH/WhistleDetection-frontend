@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
+import moment from '@/libs/moment.js'
 
 export const TOKEN_KEY = 'token'
 
@@ -345,4 +346,36 @@ export const localRead = (key) => {
 
 export const checkNull = (value) => {
   return value === null || value === undefined
+}
+
+export const getColumns = () => {
+  return [
+    {
+      title: '鸣笛编号',
+      key: 'id'
+    },
+    {
+      title: '车牌号',
+      key: 'car_info'
+    },
+    {
+      title: '记录设备',
+      key: 'record_device'
+    },
+    {
+      title: '拍摄位置',
+      key: 'record_location'
+    },
+    {
+      title: '违章时间',
+      key: 'record_time',
+      render: (h, params) => {
+        return (
+          <span>
+            {moment(params.row.record_time).format('llll')}
+          </span>
+        )
+      }
+    }
+  ]
 }

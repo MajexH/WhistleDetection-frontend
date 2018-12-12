@@ -2,7 +2,7 @@
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
       <Badge :dot="!!messageUnreadCount">
-        <p>{{ name }}</p>
+        <p>{{ showName }}</p>
       </Badge>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
@@ -15,12 +15,13 @@
 <script>
 import './user.less'
 import { mapActions } from 'vuex'
+import { getUserInfo } from '@/libs/util'
+
 export default {
   name: 'User',
   props: {
-    // TODO: 将userAvator改成用户名字
     userAvator: {
-      type: String,
+      type: [String, Number, Boolean],
       default: ''
     },
     messageUnreadCount: {
@@ -29,8 +30,8 @@ export default {
     }
   },
   computed: {
-    name() {
-      return JSON.parse(this.userAvator).name
+    showName() {
+      return JSON.parse(getUserInfo()).name
     }
   },
   methods: {
@@ -38,10 +39,9 @@ export default {
       'handleLogOut'
     ]),
     logout () {
-      this.handleLogOut().then(() => {
-        this.$router.push({
-          name: 'login'
-        })
+      this.handleLogOut()
+      this.$router.push({
+        name: 'login'
       })
     },
     message () {

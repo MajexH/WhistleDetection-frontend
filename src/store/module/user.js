@@ -37,7 +37,7 @@ export default {
     setAccess (state, access) {
       state.access = access
     },
-    setUserInfo (state, token) {
+    setToken (state, token) {
       state.token = token
       setUserInfo(token)
     },
@@ -75,7 +75,7 @@ export default {
       username = username.trim()
       login({ username, password })
         .then((res) => {
-          commit('setUserInfo', res.data.data)
+          commit('setToken', res.data.data)
           router.push({
             name: 'home'
           })
@@ -84,9 +84,8 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-      commit('setUserInfo', '')
+      commit('setToken', '')
       commit('setAccess', [])
-      resolve()
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
     getMessageList ({ state, commit }) {

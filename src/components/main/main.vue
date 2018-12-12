@@ -12,7 +12,7 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :message-unread-count="messageUnreadCount" :user-avator="userAvator"/>
+          <user :message-unread-count="messageUnreadCount" :userAvator="userAvator"/>
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
