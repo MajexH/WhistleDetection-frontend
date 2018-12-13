@@ -11,14 +11,14 @@
     </Sider>
     <Layout>
       <Header class="header-con">
+        <div style="border-bottom: 1px solid black; display: flex; justify-content: center;">
+          <img :src="policeMarkBig" key="policaMark"/>
+          <h1 style="margin-left: 20px">XXXX鸣笛检测后台管理系统</h1>
+        </div>
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
-          <Col span="1">
-            <fullscreen v-model="isFullscreen"/>
-          </Col>
-          <Col span="1">
           <user :message-unread-count="messageUnreadCount" :userAvator="userAvator"/>
-          </Col>
+          <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
+          <fullscreen v-model="isFullscreen"/>
         </header-bar>
       </Header>
       <Content class="main-content-con">
@@ -47,7 +47,7 @@ import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { getNewTagList, getNextRoute, routeEqual } from '@/libs/util'
 import routers from '@/router/routers'
 import VTR from '@/assets/images/VTR.jpg'
-
+import policeMarkBig from '@/assets/images/police-mark.jpg'
 import './main.less'
 export default {
   name: 'Main',
@@ -63,7 +63,8 @@ export default {
     return {
       collapsed: false,
       VTR,
-      isFullscreen: false
+      isFullscreen: false,
+      policeMarkBig
     }
   },
   computed: {

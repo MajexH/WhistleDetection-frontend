@@ -9,7 +9,7 @@
           <Button type="text" icon="ios-arrow-back"
             @click="handleSwitchItem">
           </Button>
-          <h2 :style="{ margin: '0 0 0 90px' }">
+          <h2 :style="{ margin: '0 0 0 30%' }">
             注册
           </h2>
         </div>

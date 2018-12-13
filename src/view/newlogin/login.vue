@@ -1,11 +1,12 @@
 <template>
   <!-- 外层div是为了设置整个登陆背景 -->
-  <div class="login">
-    <h1 class="header">
-      XXXX鸣笛检测系统
-    </h1>
-    <div class="login-con">
-      <Card>
+  <Layout class="main">
+    <Header class="header" style="display:flex; justify-content: center;">
+        <img :src="policeMarkBig" key="logoBig"/>
+        <h1 style="margin-left: 20px">XXXX鸣笛检测后台管理系统</h1>
+    </Header>
+    <Content class="login">
+      <Card class="login-con">
         <login-item
           @on-handle-register="handleRegister"
           v-if="switchItem === 'login'">
@@ -14,13 +15,17 @@
           v-else>
         </register-item>
       </Card>
-    </div>
-  </div>
+    </Content>
+    <Footer class="footer">
+      Copyright © 2018 XXXX. All rights reserved.
+    </Footer>
+  </Layout>
 </template>
 
 <script>
 import { loginItem, registerItem } from '_c/login-register'
 import { mapState, mapMutations } from 'vuex'
+import policeMarkBig from '@/assets/images/police-mark.jpg'
 
 export default {
   components: {
@@ -42,6 +47,7 @@ export default {
   },
   data () {
     return {
+      policeMarkBig
     }
   },
   beforeDestroy () {
