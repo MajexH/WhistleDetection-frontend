@@ -177,9 +177,9 @@ export default {
 <style scope>
   .background {
     background-image: url('../../assets/images/police.jpg');
-    background-attachment:fixed;
-    background-repeat:no-repeat;
-    background-position:bottom right;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: bottom right;
     background-size: 200px 200px;
   }
 </style>

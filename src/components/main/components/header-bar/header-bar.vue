@@ -9,7 +9,6 @@
         XXXXXXX鸣笛检测系统
       </div>
     </Col>
-
     <Col span="16"  style="margin-left: 10px;">
       <custom-bread-crumb show-icon :list="breadCrumbList"></custom-bread-crumb>
     </Col>

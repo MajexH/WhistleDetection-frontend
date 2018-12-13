@@ -1,6 +1,9 @@
 <template>
   <!-- 外层div是为了设置整个登陆背景 -->
   <div class="login">
+    <h1 class="header">
+      XXXX鸣笛检测系统
+    </h1>
     <div class="login-con">
       <Card>
         <login-item
