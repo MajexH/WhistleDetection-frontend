@@ -12,9 +12,13 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :message-unread-count="messageUnreadCount" :userAvator="userAvator"/>
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <Col span="1">
+            <fullscreen v-model="isFullscreen"/>
+          </Col>
+          <Col span="1">
+          <user :message-unread-count="messageUnreadCount" :userAvator="userAvator"/>
+          </Col>
         </header-bar>
       </Header>
       <Content class="main-content-con">
