@@ -11,9 +11,9 @@
     </Sider>
     <Layout>
       <Header class="header-con">
-        <div style="border-bottom: 1px solid black; display: flex; justify-content: center;">
+        <div style="border-bottom: 1px solid black; display: flex; padding: 8px 0px">
           <img :src="policeMarkBig" key="policaMark"/>
-          <h1 style="margin-left: 20px">XXXX鸣笛检测后台管理系统</h1>
+          <h1 style="margin-left: 20px; font-size: 250%">鸣笛检测后台管理系统</h1>
         </div>
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="messageUnreadCount" :userAvator="userAvator"/>

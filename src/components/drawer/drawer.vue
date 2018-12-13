@@ -148,7 +148,7 @@ export default {
         ]
         this.$nextTick(() => {
           for (let item of document.getElementsByTagName('img')) {
-            item.style.width = '100%'
+            if (String(item.alt).indexOf('picture') > -1) { item.style.width = '100%' }
           }
         })
       }

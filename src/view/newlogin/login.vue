@@ -1,9 +1,9 @@
 <template>
   <!-- 外层div是为了设置整个登陆背景 -->
   <Layout class="main">
-    <Header class="header" style="display:flex; justify-content: center;">
-        <img :src="policeMarkBig" key="logoBig"/>
-        <h1 style="margin-left: 20px">XXXX鸣笛检测后台管理系统</h1>
+    <Header class="header">
+      <img :src="policeMarkBig" key="logoBig"/>
+      <h1 style="margin-left: 20px; font-size: 250%">鸣笛检测后台管理系统</h1>
     </Header>
     <Content class="login">
       <Card class="login-con">

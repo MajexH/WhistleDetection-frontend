@@ -9,6 +9,9 @@
 .header{
   background-color: #0d419d;
   color: white;
+  display:flex;
+  padding: 5px 10px;
+  height: 74px;
 }
 
 .login-con {

@@ -43,7 +43,6 @@ export default {
     this.columnList.push({
       title: '审核',
       key: 'handle',
-      fixed: 'right',
       width: 120,
       render: h => {
         return (
