@@ -360,14 +360,14 @@ export const getColumns = () => {
     },
     {
       title: '记录设备',
-      key: 'record_device'
+      key: 'record_deviceSerial'
     },
     {
       title: '拍摄位置',
       key: 'record_location'
     },
     {
-      title: '违章时间',
+      title: '拍摄时间',
       key: 'record_time',
       render: (h, params) => {
         return (

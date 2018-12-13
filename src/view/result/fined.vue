@@ -16,7 +16,7 @@
 <script>
 import pageTable from '@/components/table/table.vue'
 import { getFined } from '@/api/fine.js'
-import moment from '@/libs/moment.js'
+import { getColumns } from '@/libs/util.js'
 import serviceDrawer from '@/components/drawer/drawer.vue'
 
 export default {
@@ -37,57 +37,39 @@ export default {
   data() {
     return {
       showDrawer: false,
-      columnList: [
-        {
-          title: '鸣笛编号',
-          key: 'id'
-        },
-        {
-          title: '记录设备',
-          key: 'record_device'
-        },
-        {
-          title: '拍摄位置',
-          key: 'record_location'
-        },
-        {
-          title: '违章车牌',
-          key: 'car_info'
-        },
-        {
-          title: '违章时间',
-          key: 'record_time',
-          render: (h, params) => {
-            return (
-              <span>
-                {moment(params.row.record_time).format('llll')}
-              </span>
-            )
-          }
-        },
-        {
-          title: '是否违章',
-          key: 'is_illegal'
-        },
-        {
-          title: '查看',
-          key: 'handle',
-          render: (h) => {
-            return (
-              <i-button
-                icon="ios-menu"
-                type="text"
-                onClick={this.changeDrawerAction}
-              />
-            )
-          }
-        }
-      ],
+      columnList: getColumns(),
       data: [],
       loading: false
     }
   },
   mounted() {
+    this.columnList.push({
+      title: '是否违章',
+      key: 'is_illegal',
+      render: (h, params) => {
+        if (params.row.is_illegal) {
+          return (
+            <span>是</span>
+          )
+        } else {
+          return (
+            <span>否</span>
+          )
+        }
+      }
+    }, {
+      title: '查看',
+      key: 'handle',
+      render: (h) => {
+        return (
+          <i-button
+            icon="ios-menu"
+            type="text"
+            onClick={this.changeDrawerAction}
+          />
+        )
+      }
+    })
     this.loading = true
     getFined()
       .then((res) => {

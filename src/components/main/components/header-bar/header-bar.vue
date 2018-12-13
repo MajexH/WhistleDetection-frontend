@@ -1,6 +1,7 @@
 <template>
   <div class="header-bar">
     <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger>
+    <img :src="policeMark" style="margin-left: 30px; height: 50px" key="police-mark"/>
     <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb>
     <div class="custom-content-con">
       <slot></slot>
@@ -10,6 +11,7 @@
 <script>
 import siderTrigger from './sider-trigger'
 import customBreadCrumb from './custom-bread-crumb'
+import policeMark from '@/assets/images/ui-header.jpg'
 import './header-bar.less'
 export default {
   name: 'HeaderBar',
@@ -23,6 +25,11 @@ export default {
   computed: {
     breadCrumbList () {
       return this.$store.state.app.breadCrumbList
+    }
+  },
+  data() {
+    return {
+      policeMark
     }
   },
   methods: {
