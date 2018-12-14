@@ -151,6 +151,9 @@ export default {
             if (String(item.alt).indexOf('picture') > -1) { item.style.width = '100%' }
           }
         })
+      } else {
+        // 关闭的时候 重置状态
+        this.switchRevoke = false
       }
     },
     handleClose() {

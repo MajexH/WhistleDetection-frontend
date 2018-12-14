@@ -3,7 +3,7 @@
   <Layout class="main">
     <Header class="header">
       <img :src="policeMarkBig" key="logoBig"/>
-      <h1 style="margin-left: 20px; font-size: 250%">鸣笛检测后台管理系统</h1>
+      <h1 style="margin-left: 20px; font-size: 250%">鸣笛抓拍后台管理系统</h1>
     </Header>
     <Content class="login">
       <Card class="login-con">

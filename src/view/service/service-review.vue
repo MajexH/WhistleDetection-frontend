@@ -18,7 +18,7 @@
 import serviceDrawer from '@/components/drawer/drawer.vue'
 import pageTable from '@/components/table/table.vue'
 import { getReview } from '@/api/whistle.js'
-import { getColumns } from '@/libs/util.js'
+import { getColumns, transferTime, transferStatus } from '@/libs/util.js'
 
 export default {
   components: {
@@ -40,41 +40,18 @@ export default {
     this.loading = true
     const res = await getReview().catch(() => {})
     this.loading = false
-    this.serviceData = res.data.data
+    this.serviceData = transferTime(res.data.data)
     /**
      * 因为需要有is_dispose is_illegal两个状态进行判断
      * 而Table只支持一个key进行判断
      * 因此map一下data
      * 将data format的两个状态format到一个上
      */
-    this.serviceData.map(item => {
-      switch (item.is_dispose) {
-        // 未处理
-        case false:
-          item.status = 0
-          break
-        // 已处理
-        case true:
-          if (item.is_illegal) {
-            // 违法
-            item.status = 1
-          } else {
-            // 不违法
-            item.is_illegal = 2
-          }
-          break
-      }
-      return item
-    })
+    this.serviceData = transferStatus(this.serviceData)
     this.columnList.push(
       {
         title: '状态',
-        key: status,
-        render: (h, params) => {
-          if (params.row.status === 0) return <span>未处理</span>
-          else if (params.row.status === 1) return <span>违法</span>
-          else return <span>不违法</span>
-        }
+        key: 'status'
       },
       {
         title: '操作',

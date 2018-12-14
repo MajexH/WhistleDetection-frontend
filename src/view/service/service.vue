@@ -18,7 +18,7 @@
 import serviceDrawer from '@/components/drawer/drawer.vue'
 import pageTable from '@/components/table/table.vue'
 import { getWhistle } from '@/api/whistle.js'
-import { getColumns } from '@/libs/util.js'
+import { getColumns, transferTime } from '@/libs/util.js'
 
 export default {
   components: {
@@ -39,7 +39,7 @@ export default {
     this.loading = true
     const res = await getWhistle().catch(() => {})
     this.loading = false
-    this.serviceData = res.data.data
+    this.serviceData = transferTime(res.data.data)
     this.columnList.push({
       title: '审核',
       key: 'handle',

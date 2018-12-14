@@ -368,14 +368,38 @@ export const getColumns = () => {
     },
     {
       title: '拍摄时间',
-      key: 'record_time',
-      render: (h, params) => {
-        return (
-          <span>
-            {moment(params.row.record_time).format('llll')}
-          </span>
-        )
-      }
+      key: 'record_time'
     }
   ]
+}
+
+// 转换时间
+export const transferTime = (data) => {
+  for (let item of data) {
+    item.record_time = moment(data.record_time).format('llll')
+  }
+  return data
+}
+
+export const transferStatus = (data) => {
+  data.map(item => {
+    switch (item.is_dispose) {
+      // 未处理
+      case false:
+        item.status = '未处理'
+        break
+      // 已处理
+      case true:
+        if (item.is_illegal) {
+          // 违法
+          item.status = '违章'
+        } else {
+          // 不违法
+          item.status = '不违章'
+        }
+        break
+    }
+    return item
+  })
+  return data
 }

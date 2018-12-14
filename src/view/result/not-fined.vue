@@ -17,7 +17,7 @@
 import pageTable from '@/components/table/table.vue'
 import { getNotFined } from '@/api/fine.js'
 import serviceDrawer from '@/components/drawer/drawer.vue'
-import { getColumns } from '@/libs/util.js'
+import { getColumns, transferTime } from '@/libs/util.js'
 
 export default {
   components: {
@@ -73,7 +73,7 @@ export default {
     this.loading = true
     getNotFined()
       .then((res) => {
-        this.data = res.data.data
+        this.data = transferTime(res.data.data)
       })
       .catch(() => {})
       .finally(() => {
