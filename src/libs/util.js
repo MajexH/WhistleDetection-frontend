@@ -376,7 +376,7 @@ export const getColumns = () => {
 // 转换时间
 export const transferTime = (data) => {
   for (let item of data) {
-    item.record_time = moment(data.record_time).format('llll')
+    item.record_time = moment(item.record_time).format('llll')
   }
   return data
 }
