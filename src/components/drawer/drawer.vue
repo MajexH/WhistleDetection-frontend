@@ -54,6 +54,7 @@ import { videoPlayer } from 'vue-video-player'
 import { operateWhistle, operateOverview } from '@/api/whistle.js'
 import { mapState } from 'vuex'
 import { getColumns } from '@/libs/util.js'
+import { getUserInfo } from '@/libs/util'
 
 export default {
   components: {
@@ -165,7 +166,7 @@ export default {
           if (this.source === 'review') {
             operateOverview({
               whistle: this.row.id,
-              user: JSON.parse(this.$store.state.user.userInfo).id,
+              user: JSON.parse(getUserInfo()).id,
               reason: this.form.reason
             }).then(() => {
               document.location.reload()
@@ -180,7 +181,7 @@ export default {
           // 请求API
           operateWhistle({
             whistle: this.row.id,
-            user: JSON.parse(this.$store.state.user.userInfo).id,
+            user: JSON.parse(getUserInfo()).id,
             is_illegal: illegal,
             reason: this.form.reason
           }).then(() => {
