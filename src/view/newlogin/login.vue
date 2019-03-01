@@ -17,7 +17,7 @@
       </Card>
     </Content>
     <Footer class="footer">
-      Copyright © 2018 XXXX. All rights reserved.
+      Copyright © 2018 维特瑞. All rights reserved.
     </Footer>
   </Layout>
 </template>
