@@ -2,7 +2,7 @@ import moment from 'moment'
 
 moment.defineLocale('zh-cn', {
   longDateFormat: {
-    llll: 'YYYY年MM月DD日hh点mm分'
+    llll: 'YYYY年MM月DD日HH点mm分'
   }
 })
 
